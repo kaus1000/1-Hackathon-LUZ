@@ -130,11 +130,10 @@ def Captura_de_moedas_offshore(url):
         price_earnings = [tag.text for tag in price_earnings_tags]
         price_earnings = price_earnings[0]
         
-        market_status_tags = resp.html.find(".tv-symbol-price-quote__market-stat--closed")
+        market_status_tags = resp.html.find(".tv-symbol-price-quote__market-stat")
 
         market_status = [tag.text for tag in market_status_tags]
         market_status = market_status[0]
-        
 
         print(('\n Paridade: {}\n Valor da quota: {}\n Moeda: {}\n Mudança no preço: {}\n Porcetagem de mudança: {}\n Próximos ganhos: {}\n Lucro por ação: {}\n Capitalização de mercado: {}\n Rendimento Dividendo: {}\n Preço/Ganhos: {}\n Estado do mercado: {}'
             .format(name_active, last, currency,price_change, price_quote, next_earning, eps, market_cap, dividends, price_earnings, market_status)))
