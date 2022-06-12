@@ -57,7 +57,7 @@ def main(url):
 
 def lendo_ativos():
     global indices, crypto, currencies
-    with open('ativos.csv', encoding='UTF8', newline='') as csvfile:
+    with open('input.csv', encoding='UTF8', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=' ')
         lista = []
         for row in spamreader:
@@ -87,7 +87,6 @@ def enviar_indice():
                     break
                 
                 resultado.append(indices_result)
-                print(resultado)
                 spamwriter.writerows([resultado])
                 
 def enviar_crypto():
