@@ -2,6 +2,7 @@ from requests_html import HTMLSession
 import csv
 import json
 
+
 def main(url):
     site = "https://br.investing.com/"
     if "crypto" in url:
@@ -14,7 +15,7 @@ def main(url):
     session = HTMLSession()
 
     resp = session.get(url)
-
+    
     if "indices" in url:
         open_tags = resp.html.find("#curr_table")
         open = [tag.text for tag in open_tags]
