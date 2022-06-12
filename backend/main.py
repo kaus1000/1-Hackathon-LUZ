@@ -179,9 +179,6 @@ def currencies():
             })
     return jsonify(data)
 
-@app.route('/teste', methods=['GET'])
-def teste():
-    return jsonify(teste2)
 
 @app.route('/todos', methods=['GET'])
 def todos():
