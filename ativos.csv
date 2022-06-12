@@ -4,6 +4,9 @@ currencies/usd-jpy
 currencies/usd-chf
 currencies/aud-usd
 currencies/eur-gbp
+currencies/nzd-usd
+currencies/gbp-jpy
+currencies/usd-cad
 crypto/bitcoin
 crypto/ethereum
 crypto/tether
