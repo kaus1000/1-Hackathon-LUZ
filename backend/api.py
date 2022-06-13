@@ -62,6 +62,7 @@ def todos():
         for x in spamreader:
             data_all.append({
                 "id": x[0],
+                "tipo": "indice",
                 "nome": x[1],
                 "fechamento": x[2],
             })
@@ -72,6 +73,7 @@ def todos():
         for x in spamreader:
             data_all.append({
                 "id": i,
+                "tipo": "crypto",
                 "nome": x[1],
                 "fechamento": x[2],
             })
@@ -82,6 +84,7 @@ def todos():
         for x in spamreader:
             data_all.append({
                 "id": i,
+                "tipo": "currencies",
                 "nome": x[1],
                 "fechamento": x[2],
             })
