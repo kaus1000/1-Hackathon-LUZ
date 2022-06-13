@@ -84,7 +84,7 @@ def lendo_ativos():
     enviar_indice()
     enviar_crypto()
     enviar_currencies()
-    return indices_dados, cryptos_dados, currencies_dados
+    
 
 def enviar_indice():
     i = 0
@@ -107,7 +107,7 @@ def enviar_indice():
 
                 resultado.append(indices_result)
                 spamwriter.writerows([resultado])
-    return resultado
+    
 
 
 def enviar_crypto():
@@ -131,7 +131,7 @@ def enviar_crypto():
 
                 resultado.append(crypto_result)
                 spamwriter.writerows([resultado])
-    return resultado
+    
 
 
 def enviar_currencies():
@@ -154,6 +154,4 @@ def enviar_currencies():
 
                 resultado.append(currencies_result)
                 spamwriter.writerows([resultado])
-    return resultado
-
-print(extrair("crypto/lalalfdjkafs"))
+    
