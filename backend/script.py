@@ -1,9 +1,9 @@
 from requests_html import HTMLSession
 import csv
-import json
+from json import dumps
 
 
-def main(url):
+def extrair(url):
     site = "https://br.investing.com/"
     if "crypto" in url:
         url = site + url + "/historical-data"
@@ -15,11 +15,11 @@ def main(url):
     session = HTMLSession()
 
     resp = session.get(url)
-    
+
     if "indices" in url:
-        open_tags = resp.html.find("#curr_table")
-        open = [tag.text for tag in open_tags]
-        json_string = json.dumps(open)
+        indices_tags = resp.html.find("#curr_table")
+        indices_table = [tag.text for tag in indices_tags]
+        json_string = dumps(indices_table)
         fechamento_indice = json_string[81:89]
         if json_string[89] == "\\":
             fechamento_indice = json_string[81:89]
@@ -33,9 +33,9 @@ def main(url):
         return fechamento_indice
 
     if "crypto" in url:
-        open_tags = resp.html.find("#curr_table")
-        open = [tag.text for tag in open_tags]
-        json_string = json.dumps(open)
+        cryptos_tags = resp.html.find("#curr_table")
+        cryptos_table = [tag.text for tag in cryptos_tags]
+        json_string = dumps(cryptos_table)
         fechamento_crypto = json_string[81:89]
         if json_string[89] == "\\":
             fechamento_crypto = json_string[81:89]
@@ -49,93 +49,97 @@ def main(url):
         return fechamento_crypto
 
     if "currencies" in url:
-        open_tags = resp.html.find("#curr_table")
-        open = [tag.text for tag in open_tags]
-        json_string = json.dumps(open)
+        currencies_tags = resp.html.find("#curr_table")
+        currencies_table = [tag.text for tag in currencies_tags]
+        json_string = dumps(currencies_table)
         fechamento_currencies = json_string[75:81]
 
         return fechamento_currencies
 
 def lendo_ativos():
-    global indices, crypto, currencies
+    global indices_dados, cryptos_dados, currencies_dados
     with open('input.csv', encoding='UTF8', newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=' ')
         lista = []
         for row in spamreader:
             ativos = ', '.join(row)
             lista.append(ativos)
-            
-        
-    indices=list(filter(lambda x: "indices" in x, lista))
-    crypto=list(filter(lambda x: "crypto" in x, lista))
-    currencies=list(filter(lambda x: "currencies" in x, lista))
 
-def enviar_indice():
-    i=0
-    with open('indices.csv', 'w',encoding='UTF8') as csvfile:
-        spamwriter = csv.writer(csvfile,delimiter=' ',lineterminator='\n')
-
-        for x in range(len(indices)):
-            for k in indices:
-                
-                resultado = []
-                indices_nome=k[8:] 
-                resultado.append(indices_nome)
-                try:
-                    indices_result=main(indices[x+i])
-                    i= 1+i
-                except:
-                    break
-                
-                resultado.append(indices_result)
-                spamwriter.writerows([resultado])
-                
-def enviar_crypto():
-    i=0
-    with open('crypto.csv', 'w',encoding='UTF8') as csvfile:
-        spamwriter = csv.writer(csvfile,delimiter=' ',lineterminator='\n')
-
-        for x in range(len(crypto)):
-            for k in crypto:
-                
-                resultado = []
-                indices_nome=k[7:] 
-                resultado.append(indices_nome)
-                try:
-                    crypto_result=main(crypto[x+i])
-                    i= 1+i
-                except:
-                    break
-                
-                resultado.append(crypto_result)
-                print(resultado)
-                spamwriter.writerows([resultado])
-
-
-def enviar_currencies():
-    i=0
-    with open('currencies.csv', 'w',encoding='UTF8') as csvfile:
-        spamwriter = csv.writer(csvfile,delimiter=' ',lineterminator='\n')
-        for x in range(len(currencies)):
-            for k in currencies:
-                
-                resultado = []
-                currencies_nome=k[11:] 
-                resultado.append(currencies_nome)
-                try:
-                    currencies_result=main(currencies[x+i])
-                    i= 1+i
-                except:
-                    break
-                
-                resultado.append(currencies_result)
-                print(resultado)
-                spamwriter.writerows([resultado])
-
-
-if __name__ == "__main__":
-    lendo_ativos()
+    indices_dados = list(filter(lambda x: "indices" in x, lista))
+    cryptos_dados = list(filter(lambda x: "crypto" in x, lista))
+    currencies_dados = list(filter(lambda x: "currencies" in x, lista))
     enviar_indice()
     enviar_crypto()
     enviar_currencies()
-    
+    return indices_dados, cryptos_dados, currencies_dados
+
+def enviar_indice():
+    i = 0
+    id = 0
+    with open('indices.csv', 'w', encoding='UTF8') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
+
+        for x in range(len(indices_dados)):
+            for k in indices_dados:
+                resultado = []
+                id = i
+                resultado.append(id)
+                indices_nome = k[8:]
+                resultado.append(indices_nome)
+                try:
+                    indices_result = extrair(indices_dados[x+i])
+                    i = 1+i
+                except:
+                    break
+
+                resultado.append(indices_result)
+                spamwriter.writerows([resultado])
+    return resultado
+
+
+def enviar_crypto():
+    i = 0
+    id = 0
+    with open('cryptos.csv', 'w', encoding='UTF8') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
+        for x in range(len(cryptos_dados)):
+            for k in cryptos_dados:
+                resultado = []
+                id = i
+                resultado.append(id)
+                cryptos_nome = k[7:]
+                resultado.append(cryptos_nome)
+
+                try:
+                    crypto_result = extrair(cryptos_dados[x+i])
+                    i = 1+i
+                except:
+                    break
+
+                resultado.append(crypto_result)
+                spamwriter.writerows([resultado])
+    return resultado
+
+
+def enviar_currencies():
+    i = 0
+    id = 0
+    with open('currencies.csv', 'w', encoding='UTF8') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
+        for x in range(len(currencies_dados)):
+            for k in currencies_dados:
+                resultado = []
+                id = i
+                resultado.append(id)
+                currencies_nome = k[11:]
+                resultado.append(currencies_nome)
+                try:
+                    currencies_result = extrair(currencies_dados[x+i])
+                    i = 1+i
+                except:
+                    break
+
+                resultado.append(currencies_result)
+                spamwriter.writerows([resultado])
+    return resultado
+

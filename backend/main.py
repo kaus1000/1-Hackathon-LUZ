@@ -2,7 +2,7 @@
 from requests_html import HTMLSession
 import csv
 from json import dumps
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_cors import CORS
 
 
@@ -78,6 +78,7 @@ def lendo_ativos():
     enviar_indice()
     enviar_crypto()
     enviar_currencies()
+    return indices_dados, cryptos_dados, currencies_dados
 
 def enviar_indice():
     i = 0
@@ -100,6 +101,7 @@ def enviar_indice():
 
                 resultado.append(indices_result)
                 spamwriter.writerows([resultado])
+    return resultado
 
 
 def enviar_crypto():
@@ -123,6 +125,7 @@ def enviar_crypto():
 
                 resultado.append(crypto_result)
                 spamwriter.writerows([resultado])
+    return resultado
 
 
 def enviar_currencies():
@@ -145,6 +148,7 @@ def enviar_currencies():
 
                 resultado.append(currencies_result)
                 spamwriter.writerows([resultado])
+    return resultado
 
 
 @app.route('/indices', methods=['GET'])
@@ -187,34 +191,6 @@ def currencies():
                 "fechamento": x[2],
             })
     return dumps(data, indent=4)
-
-
-@app.route('/todos', methods=['GET'])
-def todos():
-    data = []
-    with open('indices.csv', encoding='UTF8', newline='') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=' ')
-        for x in spamreader:
-            data.append({
-                "nome": x[0],
-                "fechamento": x[1],
-            })
-    with open('cryptos.csv', encoding='UTF8', newline='') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=' ')
-        for x in spamreader:
-            data.append({
-                "nome": x[0],
-                "fechamento": x[1],
-            })
-    with open('currencies.csv', encoding='UTF8', newline='') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=' ')
-        for x in spamreader:
-            data.append({
-                "nome": x[0],
-                "fechamento": x[1],
-            })
-    return jsonify(data)
-
 
 
 @app.route('/json', methods=['POST'])
