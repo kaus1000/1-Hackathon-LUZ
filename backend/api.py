@@ -1,4 +1,4 @@
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 from flask import Flask, request
 import csv
 from json import dumps
@@ -52,6 +52,7 @@ def currencies():
 
 
 @app.route('/json', methods=['POST'])
+@cross_origin()
 def json():
     request_data = request.get_json()
 
