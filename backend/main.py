@@ -81,13 +81,15 @@ def lendo_ativos():
 
 def enviar_indice():
     i = 0
+    id = 0
     with open('indices.csv', 'w', encoding='UTF8') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
 
         for x in range(len(indices_dados)):
             for k in indices_dados:
-
                 resultado = []
+                id = i
+                resultado.append(id)
                 indices_nome = k[8:]
                 resultado.append(indices_nome)
                 try:
@@ -102,12 +104,14 @@ def enviar_indice():
 
 def enviar_crypto():
     i = 0
+    id = 0
     with open('cryptos.csv', 'w', encoding='UTF8') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
         for x in range(len(cryptos_dados)):
             for k in cryptos_dados:
-
                 resultado = []
+                id = i
+                resultado.append(id)
                 cryptos_nome = k[7:]
                 resultado.append(cryptos_nome)
 
@@ -123,12 +127,14 @@ def enviar_crypto():
 
 def enviar_currencies():
     i = 0
+    id = 0
     with open('currencies.csv', 'w', encoding='UTF8') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
         for x in range(len(currencies_dados)):
             for k in currencies_dados:
-
                 resultado = []
+                id = i
+                resultado.append(id)
                 currencies_nome = k[11:]
                 resultado.append(currencies_nome)
                 try:
@@ -148,10 +154,11 @@ def indices():
         data = []
         for x in spamreader:
             data.append({
-                "nome": x[0],
-                "fechamento": x[1],
+                "id": x[0],
+                "nome": x[1],
+                "fechamento": x[2]
             })
-    return jsonify(data)
+    return dumps(data, indent=4)
 
 
 @app.route('/cryptos', methods=['GET'])
@@ -164,7 +171,7 @@ def cryptos():
                 "nome": x[0],
                 "fechamento": x[1],
             })
-    return jsonify(data)
+    return dumps(data, indent=4)
 
 
 @app.route('/currencies', methods=['GET'])
@@ -177,7 +184,7 @@ def currencies():
                 "nome": x[0],
                 "fechamento": x[1],
             })
-    return jsonify(data)
+    return dumps(data, indent=4)
 
 
 @app.route('/todos', methods=['GET'])
