@@ -168,8 +168,9 @@ def cryptos():
         data = []
         for x in spamreader:
             data.append({
-                "nome": x[0],
-                "fechamento": x[1],
+                "id": x[0],
+                "nome": x[1],
+                "fechamento": x[2],
             })
     return dumps(data, indent=4)
 
@@ -181,8 +182,9 @@ def currencies():
         data = []
         for x in spamreader:
             data.append({
-                "nome": x[0],
-                "fechamento": x[1],
+                "id": x[0],
+                "nome": x[1],
+                "fechamento": x[2],
             })
     return dumps(data, indent=4)
 
