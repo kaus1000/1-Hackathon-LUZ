@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 241.72 192.55">
+  <defs>
+    <clipPath id="a">
+      <polygon points="0 192.55 149.69 92.37 149.69 0 0 192.55" style="fill: none"/>
+    </clipPath>
+    <linearGradient id="b" data-name="Gradiente sem nome" x1="-446.99" y1="245.65" x2="-445.99" y2="245.65" gradientTransform="translate(66909.83 -36674.86) scale(149.69)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffffe"/>
+      <stop offset="0.59" stop-color="#87afbb"/>
+      <stop offset="1" stop-color="#00657e"/>
+    </linearGradient>
+    <clipPath id="c">
+      <polygon points="149.69 92.37 0 192.55 241.72 92.37 149.69 92.37" style="fill: none"/>
+    </clipPath>
+    <linearGradient id="d" data-name="Gradiente sem nome 2" x1="-448.14" y1="244.96" x2="-447.14" y2="244.96" gradientTransform="translate(108325.66 -59070.05) scale(241.72)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffffe"/>
+      <stop offset="1" stop-color="#87afbb"/>
+    </linearGradient>
+    <clipPath id="e">
+      <polygon points="0 192.55 241.72 106.31 241.72 92.37 0 192.55" style="fill: none"/>
+    </clipPath>
+    <linearGradient id="f" data-name="Gradiente sem nome 3" x1="-448.14" y1="244.96" x2="-447.14" y2="244.96" gradientTransform="translate(108325.66 -59070.05) scale(241.72)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffffe"/>
+      <stop offset="1" stop-color="#c2d6dc"/>
+    </linearGradient>
+  </defs>
+  <title>Ativo 1</title>
+  <g>
+    <g style="clip-path: url(#a)">
+      <rect width="149.69" height="192.55" style="fill: url(#b)"/>
+    </g>
+    <g style="clip-path: url(#c)">
+      <rect y="92.37" width="241.72" height="100.17" style="fill: url(#d)"/>
+    </g>
+    <g style="clip-path: url(#e)">
+      <rect y="92.37" width="241.72" height="100.17" style="fill: url(#f)"/>
+    </g>
+  </g>
+</svg>
