@@ -52,6 +52,9 @@ module.exports = {
       zIndex: {
         60: '60',
       },
+      colors: {
+        luz: '#056880',
+      },
     },
   },
   plugins: [

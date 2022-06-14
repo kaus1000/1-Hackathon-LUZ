@@ -1,100 +1,108 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+// Componentes
 import Tabela from "../components/Tabela";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
 
 // Constantes
-import { TABELA_ANALITICO_CABECALHO, OPCOES_SELECT_ANALITICO } from "../constants/analitico/analitico-constants";
+import { TABELA_ANALITICO_CABECALHO } from "../constants/analitico/analitico-constants";
 
 // Serviços
 import fechamentoServices from "../services/fechamentoServices";
 
 function Analitico() {
+  const [carregando, setCarregando] = useState(false);
+  const [abrirModal, setAbrirModal] = useState(false);
   const [itemSelecionado, setItemSelecionado] = useState('');
   const [dadosLista, setDadosLista] = useState([]);
 
-  const msgRetorno = "Não foi possível obter as informações de ";
-
-  // Listar fechamento dos Índices
-  const listarIndices = () => {
+  // Lista todos os fechamentos solicitados
+  const listarTodos = () => {
     fechamentoServices
-      .obterIndices()
+      .obterTodos()
       .then((resposta) => {
         let data = resposta.data;
         setDadosLista(data);
       })
-      .catch((erro) =>
-        toast.error(msgRetorno + "índices.")
-      );
+      .catch((erro) => toast.error("Não foi possível obter as informações de fechamento."));
   };
 
-  // Listar fechamento das Cryptos
-  const listarCryptos = () => {
-    fechamentoServices
-      .obterCryptos()
-      .then((resposta) => {
-        let data = resposta.data;
-        setDadosLista(data);
-      })
-      .catch((erro) =>
-        toast.error(msgRetorno + "cryptos.")
-      );
-  };
+  const enviarLista = (data) => {
+    setCarregando(true);
 
-  // Listar fechamento das Currencies
-  const listarCurrencies = () => {
     fechamentoServices
-      .obterCurrencies()
+      .consultarFechamentos(data)
       .then((resposta) => {
-        let data = resposta.data;
-        setDadosLista(data);
+        listarTodos();
+        setCarregando(false);
+        handleFecharModal();
+        toast.success("Consulta realizada com sucesso.");
+
       })
-      .catch((erro) =>
-        toast.error(msgRetorno + "currencies.")
-      );
+      .catch((erro) => toast.error("Ocorreu um erro ao realizar a consulta."));
   };
 
   const handleSelecionarItem = (event) => {
     let item = event.target.value;
     setItemSelecionado(item);
+  };
 
-    switch (item) {
-      case "indices":
-        listarIndices();
-        break;
-      case "cryptos":
-        listarCryptos();
-        break;
-      case "currencies":
-        listarCurrencies();
-        break;
-    }
+  const handleConsultar = (itens) => {
+    let arrayItens = itens.split("\n").filter(item => item.trim());
+    let arrayIndices = arrayItens.filter(indice => indice.includes("indices"));
+    let arrayCrypto = arrayItens.filter(indice => indice.includes("crypto"));
+    let arrayCurrencies = arrayItens.filter(indice => indice.includes("currencies"));
+
+    let data = {
+      "indices": Array.isArray(arrayIndices) && arrayIndices.length ? arrayIndices : [],
+      "crypto": Array.isArray(arrayCrypto) && arrayCrypto.length ? arrayCrypto : [],
+      "currencies": Array.isArray(arrayCurrencies) && arrayCurrencies.length ? arrayCurrencies : [],
+    };
+
+    enviarLista(data);
+  };
+
+  const handleFecharModal = (value) => {
+    setAbrirModal(false);
   };
 
   return (
     <div className="flex flex-col col-span-full bg-white shadow-lg border border-slate-200">
-      <header className="px-5 py-4 border-b border-slate-100 flex items-center">
-        <div class="flex">
-          <div class="flex-1 w-64">
-            <FormControl fullWidth>
-              <InputLabel id="select-opcoes-fechamento-label">Fechamento</InputLabel>
-              <Select
-                labelId="select-opcoes-fechamento-label"
-                id="select-opcoes-fechamento"
-                value={itemSelecionado}
-                label="Fechamento"
-                onChange={handleSelecionarItem}
-              >
-                {OPCOES_SELECT_ANALITICO.map((opcao, index) => (
-                  <MenuItem value={opcao.name} key={index}>{opcao.title}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+      <Dialog onClose={handleFecharModal} open={abrirModal}>
+        <DialogTitle>Consultar fechamentos</DialogTitle>
+        <div className="flex flex-col p-5">
+          <div className="flex justify-end" style={{width: "30vw"}}>
+            <TextField
+              id="item"
+              label="Item"
+              variant="outlined"
+              rows="12"
+              onChange={handleSelecionarItem}
+              fullWidth
+              multiline
+            className="grid-cols-12"
+            />
+          </div>
+
+          <div className="flex justify-end mt-5">
+            <Button
+              className="btn-padrao-luz"
+              variant="contained"
+              onClick={() => handleConsultar(itemSelecionado)}
+              disabled={!itemSelecionado || carregando}
+            >
+              { carregando ? 'Consultando...' : 'Consultar' }
+            </Button>
           </div>
         </div>
+      </Dialog>
+
+      <header className="flex px-5 py-4 border-b border-slate-100">
+        <Button className="btn-padrao-luz" variant="contained" onClick={() => setAbrirModal(true)}>Consultar fechamentos</Button>
       </header>
 
       <Tabela colunas={TABELA_ANALITICO_CABECALHO} dados={dadosLista} />
