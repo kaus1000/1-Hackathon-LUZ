@@ -6,7 +6,7 @@
   <img alt="Luz" src="./frontend/src/static/images/logo-luz-white.svg" width="420px" /> 
   <br />
   <br />
-  Tailwind.JS | React | SASS | Python | Flask 
+   Python | React | SASS | Flask | Tailwind
 
 </h1>
 
