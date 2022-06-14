@@ -67,14 +67,15 @@ Clone repositório
    ```
 
 ### Instalação Front-End
+
+* [Node.JS](https://nodejs.org/en/)
+    ```sh
+    Você vai precisar fazer o download e instalar o node.js(link acima)
+    ```
 * Diretório
   ```sh
-    cd frontend
+  cd frontend
     ```
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
 * Install NPM packages
    ```sh
    npm install
@@ -87,13 +88,14 @@ Clone repositório
    ```sh
    npm run build
    ```
+    OBS: O diretório a ser utilizado durante produção é o 'dist'
    
 
 ### Instalação Back-End
   
-  * Python
+  * [Python](https://www.python.org/downloads/)
     ```sh
-    Você vai precisar fazer o download e instalar o python, que pode ser feito na seguinte URL:(https://www.python.org/downloads/)
+    Você vai precisar fazer o download e instalar o python(link acima)
     ```
   * Diretório 
      ```sh
