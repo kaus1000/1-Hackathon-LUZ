@@ -42,7 +42,7 @@ Projeto desenvolvido para a empresa Luz Soluções Financeiras, no 1° Hackathon
 * [Python](https://www.python.org)
 * [React.js](https://reactjs.org/)
 * [Flask](https://flask.palletsprojects.com/en/2.1.x/)
-* [Tailwindcss](https://tailwindcss.com/)
+* [Tailwind](https://tailwindcss.com/)
 * [Material-UI](https://mui.com/pt/)
 * [Vite.js](https://vitejs.dev/)
 * [SASS](https://sass-lang.com/)
