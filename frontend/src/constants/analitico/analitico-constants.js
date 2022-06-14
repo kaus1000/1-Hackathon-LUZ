@@ -1,5 +1,14 @@
 const TABELA_ANALITICO_CABECALHO = [
     {
+      field: 'tipo',
+      headerName: 'Tipo',
+      width: 100,
+      valueGetter: (params) => {
+        let tipo = params.row.tipo;
+        return tipo.charAt(0).toUpperCase() + tipo.slice(1)
+      }
+    },
+    {
       field: 'nome',
       headerName: 'Nome',
       width: 500
@@ -7,7 +16,7 @@ const TABELA_ANALITICO_CABECALHO = [
     {
       field: 'fechamento',
       headerName: 'Fechamento',
-      width: 500
+      width: 400
     },
 ];
 
@@ -17,7 +26,7 @@ const OPCOES_SELECT_ANALITICO = [
     title: "Índices",
   },
   {
-    name: "cryptos",
+    name: "crypto",
     title: "Cryptos",
   },
   {

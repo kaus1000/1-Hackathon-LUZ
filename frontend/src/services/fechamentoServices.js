@@ -12,8 +12,18 @@ const obterCurrencies = () => {
   return api.get("/currencies");
 };
 
+const obterTodos = () => {
+  return api.get("/todos");
+};
+
+const consultarFechamentos = (data) => {
+  return api.post("/json", data);
+};
+
 export default {
   obterIndices,
   obterCryptos,
-  obterCurrencies
+  obterCurrencies,
+  obterTodos,
+  consultarFechamentos,
 };
